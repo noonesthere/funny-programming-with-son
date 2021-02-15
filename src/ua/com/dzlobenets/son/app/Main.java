@@ -1,38 +1,35 @@
 package ua.com.dzlobenets.son.app;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
-public class Main{
-	
-	
-	public static void main(String[] args) throws Exception {
-		final Map<String, Integer> stisticMembers = new HashMap<>();
-		final String[] members = new String[]{
-			"Mother", //0
-			"Father",// 1
-			"Sister",//2
-			"Brother"//3
-		};
-		
-		for(int i  = 10; i > 0; i--){
-			final double rand = Math.random();				
-			final double indexDouble = rand * 3;
-			//System.out.println(indexDouble);
-			
-			
-			final int indexInt = (int)Math.round(indexDouble);
-			final String member = members[indexInt];
-			
-			Integer count = stisticMembers.getOrDefault(member, 0);
-			count = count + 1;
-			stisticMembers.put(member, count);
-			
-			
-			System.out.println("Hello," + member);
-			Thread.sleep(2000);
-		}
-		
-		
-		System.out.println(stisticMembers);
-	}
+public class Main {
+
+    private static final String[] MEMBERS = new String[]{
+            "Mother", //0
+            "Father",// 1
+            "Sister",//2
+            "Brother"//3
+    };
+    private static final Map<String, Integer> STATISTIC_OF_MEMBERS = new HashMap<>();
+
+    public static void main(String[] args) throws Exception {
+
+        for (int i = 10; i > 0; i--) {
+            final double indexDouble = Math.random() * 3;
+            final int indexInt = (int) Math.round(indexDouble);
+            final String member = MEMBERS[indexInt];
+
+            STATISTIC_OF_MEMBERS.compute(
+                    member,
+                    (k, v) -> (Objects.isNull(v) ? 1 : v + 1)
+            );
+
+            System.out.println("Hello," + member);
+            Thread.sleep(2000);
+        }
+
+        System.out.println(STATISTIC_OF_MEMBERS);
+    }
 }
